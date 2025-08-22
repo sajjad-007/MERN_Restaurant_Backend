@@ -1,16 +1,26 @@
-const express = require('express')
-
-const app = express()
+const express = require('express');
+const app = express();
 const cors = require('cors');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
+const myRoutes = require('./routes/reservation.apiRoute');
+const { errorMiddleware } = require('./error/error');
 
-dotenv.config({path: './config/config.env'})
+dotenv.config({ path: './config/config.env' });
 
-cors({
+app.use(
+  cors({
     origin: [process.env.FRONTEND_URL],
-    methods:["POST"],
+    methods: ['POST'],
     credentials: true,
-})
+  })
+);
 
+app.use(express.json());
+//this line is fundamental to handling web form data in Express.js applications
+app.use(express.urlencoded({ extended: true }));
 
-module.exports = {app}
+app.use('/api/v1/reservation', myRoutes);
+
+app.use(errorMiddleware);
+
+module.exports = { app };
