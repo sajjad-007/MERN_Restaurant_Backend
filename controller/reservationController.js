@@ -15,6 +15,7 @@ const createReservation = async (req, res, next) => {
       date,
       time,
     });
+    
     if (!reservation) {
       console.log('database create failed!');
       return next(new ErrorHandler("database coldn't save!", 401));
@@ -22,7 +23,7 @@ const createReservation = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: 'Reservation successfull',
-        reservation,
+      reservation,
     });
 
   } catch (error) {
@@ -35,6 +36,7 @@ const createReservation = async (req, res, next) => {
 
       console.error('error from create reservation', error);
     }
+      // console.error('error from create reservation', error);
   }
 };
 
